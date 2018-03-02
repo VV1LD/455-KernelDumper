@@ -146,7 +146,7 @@ int kdump(struct thread *td, struct kdump_args* args){
 	int (*copyin)(const void *uaddr, void *kaddr, size_t len) = (void *)(kernel_base + 0x14A890);
 
 	// pull in our arguments
-  uint64_t kaddr = args->payload_info_dumper->kaddr;
+ 	uint64_t kaddr = args->payload_info_dumper->kaddr;
 	uint64_t uaddr = args->payload_info_dumper->uaddr;
 
 	// run copyout into userland memory for the kaddr we specify
@@ -215,18 +215,14 @@ int kpayload(struct thread *td,struct kpayload_args* args){
 	*(uint8_t*)(kernel_base + 0x143E0F) = 0x90;
 	*/
 
-
 	// Restore write protection
 	writeCr0(cr0);
 
 	// Say hello and put the kernel base in userland to we can use later
-
 	printfkernel("\n\n\nHELLO FROM YOUR KERN DUDE =)\n\n\n");
-
 	printfkernel("kernel base is:0x%016llx\n", kernel_base);
 
 	// Say hello and put the kernel base in userland to we can use later
-
 	uint64_t uaddr = args->payload_info->uaddr;
 
 	printfkernel("uaddr is:0x%016llx\n", uaddr);
@@ -363,16 +359,13 @@ int _main(struct thread *td){
 	
 	int flag = 1;
 	sceNetSetsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char *)&flag, sizeof(int));
-
 	
 	uint64_t* dump = mmap(NULL, 0x1000, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-
 
 	printfsocket("connected\n");
 
 	// patch some things in the kernel (sandbox, prison, debug settings etc..)
-	
-  struct payload_info payload_info;
+  	struct payload_info payload_info;
 
 	payload_info.uaddr = dump;
 
@@ -381,7 +374,6 @@ int _main(struct thread *td){
 	printfsocket("kernel patched!\n");
 
 	// retreive the kernel base copied into userland memory and set it
-
 	uint64_t kbase;
 
 	memcpy(&kbase,dump,8);
@@ -389,16 +381,13 @@ int _main(struct thread *td){
 	printfsocket("kernBase is:0x%016llx\n",kbase);
 	printfsocket("dump is:0x%016llx\n",dump);
 
-	// loop on our kdump payload 
-	
-	uint64_t pos = 0;
-
-  struct payload_info_dumper payload_info_dumper;
-
 	// loop enough to dump up until gpu used memory
+	uint64_t pos = 0;
+ 	struct payload_info_dumper payload_info_dumper;
+
 	for(int i = 0; i < 0x6EC7; i++){
 	
-  	payload_info_dumper.kaddr = kbase + pos;
+  		payload_info_dumper.kaddr = kbase + pos;
 		payload_info_dumper.uaddr = dump;
 
 		// call our copyout wrapper and send the userland buffer over socket
