@@ -4,7 +4,7 @@
 *
 *	Thanks to:
 *	-Qwertyuiop for his kernel exploit
-* -Specter for his Code Execution method
+* 	-Specter for his Code Execution method
 *	-IDC for helping to understand things
 *	-Shadow for the copyout trick ;)
 *
