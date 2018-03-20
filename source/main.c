@@ -3,7 +3,7 @@
 * ============== Kernel Dumper for 4.55 - WildCard ===============
 *
 *	Thanks to:
-*	-Qwertyuiop for his kernel exploit
+*	-qwertyoruiop for his kernel exploit
 * 	-Specter for his Code Execution method
 *	-IDC for helping to understand things
 *	-Shadow for the copyout trick ;)
